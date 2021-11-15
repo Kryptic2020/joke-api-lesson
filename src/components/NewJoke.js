@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 import {Label, BigTextInput, Button} from './Styled'
-import {createJoke, getJoke, updateJoke} from '../services/jokeServices'
-import {categories} from '../utils/categories'
+import { createJoke, getJoke, updateJoke } from '../services/jokeServices'
 import {useGlobalState} from '../utils/stateContext'
 
 export default function NewJoke() {
@@ -14,7 +13,7 @@ export default function NewJoke() {
 	let history = useHistory()
 	let {id} = useParams()
 	const {dispatch, store} = useGlobalState()
-	const {jokes} = store;
+	const {jokes, categories} = store;
 
 	useEffect(() => {
 		if(id) {
@@ -30,12 +29,6 @@ export default function NewJoke() {
 		}
 	},[id])
 
-	function getLastId() {
-		console.log(jokes)
-		const ids = jokes.map(joke => joke.id)
-		console.log(ids)
-		return Math.max(...ids)
-	}
 
 	function handleChange(event) {
 		setFormState({
@@ -54,8 +47,7 @@ export default function NewJoke() {
 			})
 		}
 		else {
-			const nextId = getLastId() + 1;
-			createJoke({...formState, id: nextId})
+			createJoke({...formState})
 			.then((joke) => {
 		
 				dispatch({type: 'addJoke', data: joke})

@@ -11,7 +11,6 @@ export default function Jokes() {
 	const {store} = useGlobalState()
 	const {jokes} = store
 	if(!jokes) return null
-
 	return  (
 		<div>
 			{jokes.map((joke,index) => {
